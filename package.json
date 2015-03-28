@@ -1,0 +1,16 @@
+{
+  "name": "uwc-pyvovarnyk",
+  "version": "",
+  "description": "Ihor Pyvovarnyk UWC first tour",
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ihor-pyvovarnyk/uwc-pyvovarnyk"
+  },
+  "author": {
+    "name": "Ihor Pyvovarnyk"
+  },
+  "dependencies": {
+    "node-gitter": "1.*"
+  }
+}
