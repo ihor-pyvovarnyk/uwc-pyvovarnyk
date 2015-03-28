@@ -1,9 +1,9 @@
 var Gitter = require('node-gitter');
-var config = require('./../uwc-pyvovarnyk/config.json');
+var config = require('./config.json');
 
 var roomUri = process.argv[2] || '';
 var token = config.token;
-var templateMessageRegEx = /calc[\s]+([0-9\(\)\+\-\*\/)]+)/g;
+var messageTemplate = /^calc[\s]+([0-9\(\)\+\-\*\/\s)]+)$/i;
 
 var gitter = new Gitter(token);
 gitter.currentUser()
@@ -14,7 +14,21 @@ gitter.currentUser()
         console.log('Joined room: ', room.name);
         var events = room.listen();
         events.on('message', function (message) {
-            console.log('New message: ' + message.text);
+            var msg = message.text;
+            console.log('New message: ' + msg);
+            if (messageTemplate.test(msg)) {
+                var exp = messageTemplate.exec(msg)[1] || '';
+                var resMsg = '';
+                try {
+                    resMsg = exp + ' = ' + eval(exp);
+                } catch (e) {
+                    resMsg = 'Invalid calc expression';
+                }
+                console.log(resMsg);
+                room.send(resMsg);
+            } else {
+                console.log('Message don\'t match calc template');
+            }
         });
     })
     .fail(function(err) {
