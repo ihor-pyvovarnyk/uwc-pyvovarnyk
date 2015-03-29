@@ -55,14 +55,14 @@ Bot.prototype.joinRoomCallback = function (room) {
 };
 
 /**
- * Handles new messages in chat
+ * Handles new messages in room
  * @param message {Object} Message object
  */
 Bot.prototype.messageListener = function (message) {
     var msg = message.text;
     console.log('New message:', msg);
     if (this.CALC_MSG_TEMPLATE.test(msg)) {
-        var exp = this.CALC_MSG_TEMPLATE.exec(msg)[1] || '';
+        var exp = this.CALC_MSG_TEMPLATE.exec(msg)[1];
         try {
             this._room.send(exp + ' = ' + eval(exp));
         } catch (e) {
@@ -72,7 +72,7 @@ Bot.prototype.messageListener = function (message) {
 };
 
 /**
- *
+ * Handles room joining fail
  * @param err {Object} Error object
  */
 Bot.prototype.joinRoomFail = function (err) {
